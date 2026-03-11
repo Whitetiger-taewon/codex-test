@@ -45,6 +45,18 @@ def collect_kr_stock_data(ticker: str, start_date: str | None = None, end_date: 
     if data.empty:
         raise ValueError(f"No OHLCV data found for ticker '{ticker}' between {start} and {end}.")
 
+    # pykrx returns Korean column names and uses Date as index.
+    # Normalize to beginner-friendly English names used by downstream scripts.
+    data = data.rename(
+        columns={
+            "시가": "Open",
+            "고가": "High",
+            "저가": "Low",
+            "종가": "Close",
+            "거래량": "Volume",
+        }
+    ).reset_index(names="Date")
+
     RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
     output_path = RAW_DATA_DIR / f"{ticker}_{start}_{end}_1d.csv"

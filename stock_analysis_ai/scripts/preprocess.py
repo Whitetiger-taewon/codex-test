@@ -6,6 +6,9 @@ import argparse
 import pandas as pd
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
 def preprocess_data(input_path: Path, output_path: Path) -> None:
     """Load raw CSV data, create features/target, and save processed data."""
     # Load raw stock data from CSV.
@@ -42,14 +45,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--input",
         type=Path,
-        default=Path("data/raw/stock_data.csv"),
-        help="Path to raw CSV file (default: data/raw/stock_data.csv)",
+        default=PROJECT_ROOT / "data" / "raw" / "stock_data.csv",
+        help="Path to raw CSV file (default: stock_analysis_ai/data/raw/stock_data.csv)",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("data/processed/processed_stock_data.csv"),
-        help="Path to save processed CSV (default: data/processed/processed_stock_data.csv)",
+        default=PROJECT_ROOT / "data" / "processed" / "processed_stock_data.csv",
+        help="Path to save processed CSV (default: stock_analysis_ai/data/processed/processed_stock_data.csv)",
     )
     return parser.parse_args()
 
