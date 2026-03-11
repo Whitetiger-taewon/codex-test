@@ -9,6 +9,9 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
 def find_processed_csv(processed_dir: Path) -> Path:
     """Return a processed CSV file path from the data/processed folder."""
     default_file = processed_dir / "processed_stock_data.csv"
@@ -27,8 +30,8 @@ def find_processed_csv(processed_dir: Path) -> Path:
 def train_model() -> None:
     """Load data, train model, print accuracy, and save trained model."""
     # Set input/output paths.
-    processed_dir = Path("data/processed")
-    model_path = Path("models/stock_model.pkl")
+    processed_dir = PROJECT_ROOT / "data" / "processed"
+    model_path = PROJECT_ROOT / "models" / "stock_model.pkl"
 
     # Load processed data.
     csv_path = find_processed_csv(processed_dir)

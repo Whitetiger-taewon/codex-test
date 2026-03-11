@@ -6,6 +6,9 @@ import joblib
 import pandas as pd
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
 def find_latest_file(folder: Path, pattern: str) -> Path:
     """Return the most recently modified file that matches a pattern."""
     files = list(folder.glob(pattern))
@@ -17,8 +20,8 @@ def find_latest_file(folder: Path, pattern: str) -> Path:
 def predict_next_day() -> None:
     """Load model + latest processed row and print UP or DOWN prediction."""
     # Paths used by the project.
-    models_dir = Path("models")
-    processed_dir = Path("data/processed")
+    models_dir = PROJECT_ROOT / "models"
+    processed_dir = PROJECT_ROOT / "data" / "processed"
 
     # Find the newest trained model and newest processed CSV file.
     model_path = find_latest_file(models_dir, "*.pkl")
