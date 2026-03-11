@@ -45,8 +45,7 @@ def collect_kr_stock_data(ticker: str, start_date: str | None = None, end_date: 
     if data.empty:
         raise ValueError(f"No OHLCV data found for ticker '{ticker}' between {start} and {end}.")
 
-    # pykrx returns Korean column names and uses Date as index.
-    # Normalize to beginner-friendly English names used by downstream scripts.
+    # Change Korean column names to simple English names.
     data = data.rename(
         columns={
             "시가": "Open",
@@ -60,7 +59,10 @@ def collect_kr_stock_data(ticker: str, start_date: str | None = None, end_date: 
     RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
     output_path = RAW_DATA_DIR / f"{ticker}_{start}_{end}_1d.csv"
-    data.to_csv(output_path, encoding="utf-8-sig")
+    print(f"CSV will be saved to: {output_path.resolve()}")
+    data.to_csv(output_path, index=False, encoding="utf-8-sig")
+    print(f"CSV saved to: {output_path.resolve()}")
+    print(f"Downloaded rows: {len(data)}")
     return output_path
 
 
